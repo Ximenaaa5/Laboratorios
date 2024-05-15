@@ -1,0 +1,43 @@
+a = int(input("Ingrese un numero mayor a 0: "))
+b = int(input("Ingrese un numero mayor a 0: "))
+c = int(input("Ingrese un numero mayor a 0: "))
+
+def calculo1(c):
+    a = int(0)
+    c = 0
+    for i in range(c):
+        a += 1
+        c1 = 1/a
+        c = c + c1
+    print(c)
+    
+def calculo2(c):
+    a = int(0)
+    c = 0
+    for i in range(c):
+        a+=1
+        c1 = 1/(2**a)
+        c = c + c1
+    print(c)
+
+def calculo3(a,b,c):
+    a = int(0)
+    c = 1
+    k = 1 
+    
+    for i in range(c):
+        a +=1
+        c1 = (a*a)(b**(a-k))
+        k += 1
+        c = c + c1
+    print(c)
+        
+        
+
+
+if c <= 0:
+    print("Ingrese un numero valido, tiene que ser mayor a 0")
+else:
+    calculo1(c)
+    calculo2(c)
+    calculo3(a,b,c)
