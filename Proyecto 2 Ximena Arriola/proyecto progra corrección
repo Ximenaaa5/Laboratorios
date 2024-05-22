@@ -1,0 +1,92 @@
+# Inicializar el tablero de ajedrez vacío
+tablero = [["--" for j in range(8)] for i in range(8)]
+
+# Función para imprimir el tablero
+def imprimir_tablero(tablero):
+    print("   A  B  C  D  E  F  G  H")
+    for i in range(8):
+        print(f"{8-i} ", end=" ")
+        for j in range(8):
+            print(tablero[i][j], end=" ")
+        print()
+
+# Función para agregar piezas al tablero
+def agregar_piezas(tablero):
+    n = int(input("Ingrese la cantidad de piezas a agregar: "))
+    for i in range(n):
+        tipo_pieza_valido = False
+        while not tipo_pieza_valido:
+            tipo_pieza = input(f"Ingrese el tipo de la pieza {i+1} (alfil, peon, caballo, torre, etc.): ").lower()
+            if tipo_pieza in ["alfil", "peon", "caballo", "torre"]:
+                tipo_pieza_valido = True
+            else:
+                print("Tipo de pieza inválido. Inténtelo nuevamente.")
+
+        color_valido = False
+        while not color_valido:
+            color = input(f"Ingrese el color de la pieza {i+1} (blanco o negro): ").lower()
+            if color in ["blanco", "negro"]:
+                color_valido = True
+            else:
+                print("Color inválido. Inténtelo nuevamente.")
+
+        while True:
+            posicion = input(f"Ingrese la posición de la pieza {i+1} (Ej: A1): ").upper()
+            fila = 8 - int(posicion[1])
+            columna = ord(posicion[0]) - ord('A')
+            if 0 <= fila < 8 and 0 <= columna < 8 and tablero[fila][columna] == "--":
+                tablero[fila][columna] = f"{tipo_pieza[0]}{color[0]}"
+                break
+            else:
+                print("Posición inválida o casilla ocupada. Inténtelo nuevamente.")
+
+# Función para agregar la torre a evaluar
+def agregar_torre(tablero):
+    color_valido = False
+    while not color_valido:
+        color = input("Ingrese el color de la torre (blanco o negro): ").lower()
+        if color in ["blanco", "negro"]:
+            color_valido = True
+        else:
+            print("Color inválido. Inténtelo nuevamente.")
+
+    while True:
+        posicion = input("Ingrese la posición de la torre (Ej: A1): ").upper()
+        fila = 8 - int(posicion[1])
+        columna = ord(posicion[0]) - ord('A')
+        if 0 <= fila < 8 and 0 <= columna < 8 and tablero[fila][columna] == "--":
+            tablero[fila][columna] = f"t{color[0]}"
+            return fila, columna
+        else:
+            print("Posición inválida o casilla ocupada. Inténtelo nuevamente.")
+
+# Función para obtener los movimientos válidos de la torre
+def movimientos_validos(tablero, fila, columna):
+    movimientos = []
+    # Movimientos horizontales
+    for j in range(8):
+        if j != columna and tablero[fila][j] == "--":
+            movimientos.append((fila, j))
+        elif tablero[fila][j] != "--":
+            break
+    # Movimientos verticales
+    for i in range(8):
+        if i != fila and tablero[i][columna] == "--":
+            movimientos.append((i, columna))
+        elif tablero[i][columna] != "--":
+            break
+    return movimientos
+
+# Función principal
+def main():
+    agregar_piezas(tablero)
+    fila_torre, columna_torre = agregar_torre(tablero)
+    movimientos = movimientos_validos(tablero, fila_torre, columna_torre)
+    print("Movimientos válidos de la torre:")
+    for fila, columna in movimientos:
+        print(f"{chr(columna+65)}{8-fila}", end=" ")
+    print("\n\nTablero:")
+    imprimir_tablero(tablero)
+
+# Ejecutar el programa
+main()
